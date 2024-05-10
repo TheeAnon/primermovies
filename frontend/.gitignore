@@ -1,0 +1,10 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build artifacts and temporary files
+build/
+.DS_Store
+.vscode/
+*.log
+
+# Add other files or directories
