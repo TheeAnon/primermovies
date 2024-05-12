@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
-import { connect } from "react-redux";
 
 function Menu({ isAuthenticated }) {
   const guestLinks = () => (
@@ -57,8 +56,4 @@ function Menu({ isAuthenticated }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps)(Menu);
+export default Menu;

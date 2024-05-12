@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c8f3f392.css",
+    "main.js": "/static/js/main.47eb20d3.js",
+    "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
+    "static/media/the.chi.png": "/static/media/the.chi.8fbbe034aceaf725bc2c.png",
+    "static/media/the.chi.jpg": "/static/media/the.chi.40040b8b44ee590a5104.jpg",
+    "static/media/avatar.png": "/static/media/avatar.43e751b03c3892a2146c.png",
+    "static/media/google.png": "/static/media/google.f34acd08a40efe59187f.png",
+    "index.html": "/index.html",
+    "main.c8f3f392.css.map": "/static/css/main.c8f3f392.css.map",
+    "main.47eb20d3.js.map": "/static/js/main.47eb20d3.js.map",
+    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c8f3f392.css",
+    "static/js/main.47eb20d3.js"
+  ]
+}

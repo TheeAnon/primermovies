@@ -1,5 +1,3 @@
-import { reset_password } from "../actions/auth";
-import { connect, useSelector } from "react-redux";
 import React, { useState } from "react";
 
 const ResetPassword = ({ reset_password }) => {
@@ -90,4 +88,4 @@ const ResetPassword = ({ reset_password }) => {
   );
 };
 
-export default connect(null, { reset_password })(ResetPassword);
+export default ResetPassword;

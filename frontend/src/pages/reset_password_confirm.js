@@ -1,7 +1,6 @@
 import { reset_password_confirm } from "../actions/auth";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
-import { connect, useSelector } from "react-redux";
 
 const ResetPasswordConfirm = ({ reset_password_confirm }) => {
   const error = useSelector((state) => state.auth.error);
@@ -98,4 +97,4 @@ const ResetPasswordConfirm = ({ reset_password_confirm }) => {
   );
 };
 
-export default connect(null, { reset_password_confirm })(ResetPasswordConfirm);
+export default ResetPasswordConfirm;

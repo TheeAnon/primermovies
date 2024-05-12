@@ -35,4 +35,4 @@ const Activate = ({ verify }) => {
   );
 };
 
-export default connect(null, { verify })(Activate);
+export default Activate;

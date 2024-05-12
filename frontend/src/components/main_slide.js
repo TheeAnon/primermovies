@@ -2,7 +2,7 @@ import theChi from "../images/posters/landscape/the.chi.png";
 import theChi2 from "../images/posters/portrait/the.chi.jpg";
 import React, { useState, useEffect } from "react";
 
-function MainSlider() {
+function Hero() {
   return (
     <div className="flex-shrink-0 w-full lg:w-2/3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative">
       <a href="/series/the-chi">
@@ -38,4 +38,4 @@ function MainSlider() {
   );
 }
 
-export default MainSlider;
+export default Hero;

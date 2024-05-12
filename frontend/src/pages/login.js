@@ -4,22 +4,25 @@ import fbLogo from "../images/fb.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Signup = ({ error}) => {
+const Login = ({ error }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    firstName: "",
-    lastName: "",
+    remember: "",
   });
 
-  const { firstName, lastName, email, password } = formData;
+  const { email, password, remember } = formData;
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    if (e.target.type === "checkbox") {
+      setFormData({ ...formData, [e.target.name]: e.target.checked });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-
   };
 
   const continueWithGoogle = async () => {
@@ -36,36 +39,10 @@ const Signup = ({ error}) => {
   const navigate = useNavigate();
 
   return (
-    <div className="p-4 bg-black w-full h-full flex">
+    <div className="p-4 bg-black w-full pt-20 h-full flex">
       <div className="w-full sm:m-auto sm:max-w-lg h-full sm:h-auto">
         <form className="space-y-6 mb-4" onSubmit={(e) => onSubmit(e)}>
-          <h1 className="normal-case text-4xl font-bold text-white">Create account</h1>
-          <div>
-            <label for="firstName" className="text-sm font-medium text-white">First Name</label>
-            <input
-              required
-              type="text"
-              name="firstName"
-              value={firstName}
-              onChange={(e) => onChange(e)}
-              id="firstName"
-              placeholder="Primer"
-	      className="border border-white mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 bg-black placeholder-gray-400 text-white"
-            />
-          </div>
-          <div>
-            <label for="lastName" className="text-sm font-medium text-white">Last Name</label>
-            <input
-              required
-              type="text"
-              name="lastName"
-              value={lastName}
-              onChange={(e) => onChange(e)}
-              id="lastName"
-              placeholder="Movies"
-              className="border border-white mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 bg-black placeholder-gray-400 text-white"
-            />
-          </div>
+          <h1 className="normal-case text-4xl font-bold text-white">Login</h1>
           <div>
             <label for="email"className="block mb-2 text-sm font-medium text-white">Email</label>
             <input
@@ -77,7 +54,7 @@ const Signup = ({ error}) => {
               onChange={(e) => onChange(e)}
               id="email"
               className="border border-white text-white text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 bg-black placeholder-gray-400"
-              placeholder="info@primermovies.com"
+              placeholder="name@gmail.com"
             />
           </div>
           <div>
@@ -98,12 +75,32 @@ const Signup = ({ error}) => {
             <label className="label-text-alt text-red-500">{error}</label>
           )}
           <div className="flex items-start">
-            <a href="/login" className="text-sm text-blue-700 hover:underline">Already have an account? Login</a>
+            <div className="flex items-start">
+              <div className="flex items-center h-5">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  checked={remember}
+	          onChange={(e) => onChange(e)}
+                  className="w-4 h-4 border border-white focus:ring-3"
+                />
+              </div>
+              <label for="remember" className="ml-2 text-sm font-medium text-white">
+                Remember me
+              </label>
+            </div>
+            <a
+              href="/reset-password"
+              className="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
+            >
+              Forgot Password?
+            </a>
           </div>
           <button type="submit" className="btn btn w-full rounded-none bg-white text-black">
-            Sign up
+            Login
           </button>
         </form>
+        <a href="/signup" className="text-sm text-blue-700 hover:underline">Don't have an account? Signup</a>
         <div className="divider mt-6">or continue with</div>
         <div className="flex mt-6 w-full">
           <div className="m-auto space-x-2 flex">
@@ -123,4 +120,4 @@ const Signup = ({ error}) => {
   );
 };
 
-export default Signup;
+export default Login;
