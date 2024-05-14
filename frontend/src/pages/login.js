@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import googleLogo from "../images/google.png";
 import fbLogo from "../images/fb.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-const Login = ({ error }) => {
+
+const Login = () => {
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,19 +22,23 @@ const Login = ({ error }) => {
     }
   };
 
-  const onSubmit = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-  };
 
-  const continueWithGoogle = async () => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=http://127.0.0.1:8000`
-      )
-      .then((response) => {
-        window.location.replace(response.data.authorization_url);
-      })
-      .catch((google_error) => {});
+    const response = await fetch("http://localhost:1337/api/login", {
+       method: "POST",
+       headers: {
+          "Content-Type": "application/json",
+       },
+       body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if(data.status.code == 200){
+    } else {
+      setError(data.message);
+    }
   };
 
   const navigate = useNavigate();
@@ -41,7 +46,7 @@ const Login = ({ error }) => {
   return (
     <div className="p-4 dark:bg-black w-full pt-20 h-full flex">
       <div className="w-full sm:m-auto sm:max-w-lg h-full sm:h-auto">
-        <form className="space-y-6 mb-4" onSubmit={(e) => onSubmit(e)}>
+        <form className="space-y-6 mb-4" onSubmit={(e) => login(e)}>
           <h1 className="normal-case text-4xl font-bold dark:text-white">Login</h1>
           <div>
             <label for="email"className="block mb-2 text-sm font-medium dark:text-white">Email</label>
@@ -104,10 +109,7 @@ const Login = ({ error }) => {
         <div className="divider mt-6 text-[#F5F5DC]">or continue with</div>
         <div className="flex mt-6 w-full">
           <div className="m-auto space-x-2 flex">
-            <button
-              className="btn btn-square hover:bg-white btn-outline p-1 rounded border-[#F5F5DC]"
-              onClick={continueWithGoogle}
-            >
+            <button className="btn btn-square hover:bg-white btn-outline p-1 rounded border-[#F5F5DC]">
               <img src={googleLogo} alt="google" width={20} height={20} />
             </button>
             <button className="btn btn-square btn-outline hover:bg-white p-1 rounded border-[#F5F5DC]">

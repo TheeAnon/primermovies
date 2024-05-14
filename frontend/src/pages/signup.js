@@ -20,10 +20,11 @@ const Signup = ({ error}) => {
     e.preventDefault();
 
     const response = await fetch("http://localhost:1337/api/signup", {
+       method: "POST",
        headers: {
           "Content-Type": "application/json",
        },
-       body: JSON.stringify({formData}),
+       body: JSON.stringify(formData),
     });
 
     const data = await response.json();
