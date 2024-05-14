@@ -4,22 +4,22 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 
-function Hero() {
+function Hero({ posters }) {
   return (
    <Carousel autoPlay={true} infiniteLoop={true}>
+    
     <div>
-    <div className="flex-shrink-0 w-full lg:w-2/3 justify-center relative md:rounded-lg flex h-1/4 md:h-1/5">
+    <div className="flex-shrink-0 w-full lg:w-2/3 justify-center relative md:rounded-lg flex h-1/4 items-center md:h-1/5">
       <a href="/series/the-chi">
         <img className="md:rounded-lg object-cover h-full w-full" src={theChi} alt="The Chi" />
       </a>
-      <div className="absolute top-0 w-full h-full flex items-center justify-center p-4 text-white md:rounded-lg">
-       <div className="max-w-3/4 max-h-1/2 p-5 bg-black text-center opacity-70">
+      <div className="max-w-3/4 max-h-3/4 p-5 bg-black text-center bg-opacity-70 rounded flex-center absolute">
         <a href="/series/the-chi">
-          <h5 className="text-4xl font-semibold tracking-tight hover:text-blue-600 text-white">
+          <h5 className="text-4xl font-semibold tracking-tight hover:text-blue-600 text-white opacity-100">
             The Chi
           </h5>
         </a>
-        <div className="flex w-full space-x-2 justify-center overflow-hidden">
+        <div className="flex w-full space-x-2 justify-center overflow-hidden text-white">
           <span className="text-sm">S06E05</span>
           <span className="text-sm">|</span>
           <span className="text-sm">genre</span>
@@ -31,8 +31,7 @@ function Hero() {
           </div>
         </div>
       </div>
-    </div>
-    </div>
+    </div> 
     </Carousel>
   );
 }

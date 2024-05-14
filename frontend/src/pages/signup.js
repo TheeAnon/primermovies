@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import googleLogo from "../images/google.png";
 import fbLogo from "../images/fb.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const Signup = ({ error}) => {
   const [formData, setFormData] = useState({
@@ -17,20 +16,17 @@ const Signup = ({ error}) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const Signup = async (e) =>{
     e.preventDefault();
 
-  };
+    const response = await fetch("http://localhost:1337/api/signup", {
+       headers: {
+          "Content-Type": "application/json",
+       },
+       body: JSON.stringify({formData}),
+    });
 
-  const continueWithGoogle = async () => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=http://127.0.0.1:8000`
-      )
-      .then((response) => {
-        window.location.replace(response.data.authorization_url);
-      })
-      .catch((google_error) => {});
+    const data = await response.json();
   };
 
   const navigate = useNavigate();
@@ -38,7 +34,7 @@ const Signup = ({ error}) => {
   return (
     <div className="p-4 bg-black w-full h-full flex">
       <div className="w-full sm:m-auto sm:max-w-lg h-full sm:h-auto">
-        <form className="space-y-6 mb-4" onSubmit={(e) => onSubmit(e)}>
+        <form className="space-y-6 mb-4" onSubmit={(e) => Signup(e)}>
           <h1 className="normal-case text-4xl font-bold text-white">Create account</h1>
           <div>
             <label for="firstName" className="text-sm font-medium text-white">First Name</label>
@@ -50,7 +46,7 @@ const Signup = ({ error}) => {
               onChange={(e) => onChange(e)}
               id="firstName"
               placeholder="Primer"
-	      className="border border-white mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 bg-black placeholder-gray-400 text-white"
+	      className="border border-white mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 bg-black rounded placeholder-gray-400 text-white"
             />
           </div>
           <div>
@@ -63,7 +59,7 @@ const Signup = ({ error}) => {
               onChange={(e) => onChange(e)}
               id="lastName"
               placeholder="Movies"
-              className="border border-white mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 bg-black placeholder-gray-400 text-white"
+              className="border border-white mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 bg-black rounded placeholder-gray-400 text-white"
             />
           </div>
           <div>
@@ -76,7 +72,7 @@ const Signup = ({ error}) => {
               autoComplete="off"
               onChange={(e) => onChange(e)}
               id="email"
-              className="border border-white text-white text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 bg-black placeholder-gray-400"
+              className="border border-white text-white text-sm focus:ring-blue-500 focus:border-blue-500 w-full rounded p-2.5 bg-black placeholder-gray-400"
               placeholder="info@primermovies.com"
             />
           </div>
@@ -91,7 +87,7 @@ const Signup = ({ error}) => {
               minLength={6}
               id="password"
               placeholder="••••••••"
-              className="border border-white mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 bg-black placeholder-gray-400 text-white"
+              className="border border-white mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full rounded p-2.5 bg-black placeholder-gray-400 text-white"
             />
           </div>
           {error && (
@@ -100,20 +96,19 @@ const Signup = ({ error}) => {
           <div className="flex items-start">
             <a href="/login" className="text-sm text-blue-700 hover:underline">Already have an account? Login</a>
           </div>
-          <button type="submit" className="btn btn w-full rounded-none bg-white text-black">
+          <button type="submit" className="btn btn w-full rounded-full bg-white text-black">
             Sign up
           </button>
         </form>
-        <div className="divider mt-6">or continue with</div>
+        <div className="divider mt-6 text-[#F5F5DC]">or continue with</div>
         <div className="flex mt-6 w-full">
           <div className="m-auto space-x-2 flex">
             <button
-              className="btn btn-square hover:bg-white btn-outline p-1 rounded-none"
-              onClick={continueWithGoogle}
+              className="btn btn-square hover:bg-white btn-outline border-[#F5F5DC] p-1 rounded-none"
             >
               <img src={googleLogo} alt="google" width={20} height={20} />
             </button>
-            <button className="btn btn-square btn-outline hover:bg-white p-1 rounded-none">
+            <button className="btn btn-square btn-outline hover:bg-white border-[#F5F5DC] p-1 rounded-none">
               <img src={fbLogo} alt="google" width={25} height={25} />
             </button>
           </div>

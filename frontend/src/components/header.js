@@ -10,7 +10,7 @@ const Header = () =>{
             </a>
 
         <div className="navbar-end space-x-2">
-          <a href="login" className="btn btn-outline rounded-full btn-sm normal-case">Log in</a>
+          <a href="login" className="btn btn-outline md:btn-md lg:btn-lg rounded-full btn-sm normal-case border-white text-white">Log in</a>
         </div>
     </div>
   );

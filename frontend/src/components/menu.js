@@ -1,56 +1,24 @@
 import React, { Fragment } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FaTape, FaClipboard, FaFilm, FaInfoCircle } from "react-icons/fa";
+import { GoHome } from "react-icons/go";
 
-function Menu({ isAuthenticated }) {
-  const guestLinks = () => (
-    <Fragment>
-      <li>
-        <a href="/signup">
-          <FontAwesomeIcon icon={icon({ name: "database" })} />
-          Sign up
-        </a>
-      </li>
-      <li>
-        <a href="/signin" className="whitespace-nowrap">
-          <FontAwesomeIcon icon={icon({ name: "user" })} />
-          Sign in
-        </a>
-      </li>
-    </Fragment>
-  );
+function Menu() {
   return (
-    <ul className="menu bg-base-200 w-auto rounded-box flex-shrink-0 font-medium">
+    <ul className="menu w-auto p-0 rounded-box flex-shrink-0 font-medium text-white text-xl">
       <li>
-        <a href="/">
-          <FontAwesomeIcon icon={icon({ name: "house" })} />
-          Home
-        </a>
+        <a href="/"><GoHome />Home</a>
       </li>
       <li>
-        <a href="/series" className="whitespace-nowrap">
-          <FontAwesomeIcon icon={icon({ name: "tape" })} />
-          TV Series
-        </a>
+        <a href="/series" className="whitespace-nowrap"><FaTape />TV Series</a>
       </li>
       <li>
-        <a href="/movies">
-          <FontAwesomeIcon icon={icon({ name: "clapperboard" })} />
-          Movies
-        </a>
+        <a href="/movies"><FaClipboard />Movies</a>
       </li>
       <li>
-        <a href="/anime">
-          <FontAwesomeIcon icon={icon({ name: "film" })} />
-          Anime
-        </a>
+        <a href="/anime"><FaFilm />Anime</a>
       </li>
-      {!isAuthenticated && guestLinks()}
       <li>
-        <a href="/about" className="whitespace-nowrap">
-          <FontAwesomeIcon icon={icon({ name: "info-circle" })} />
-          About
-        </a>
+        <a href="/about" className="whitespace-nowrap"><FaInfoCircle />About</a>
       </li>
     </ul>
   );

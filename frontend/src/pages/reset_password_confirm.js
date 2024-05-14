@@ -3,9 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
 
 const ResetPasswordConfirm = ({ reset_password_confirm }) => {
-  const error = useSelector((state) => state.auth.error);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { uid, token } = useParams();
   const [passError, setPassErr] = useState("");
   const [formData, setFormData] = useState({
     new_password: "",
@@ -17,21 +16,10 @@ const ResetPasswordConfirm = ({ reset_password_confirm }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (new_password === re_new_password) {
-      setPassErr("");
-      reset_password_confirm(uid, token, new_password, re_new_password);
-      error === null && navigate("/", { replace: true });
-    } else {
-      setPassErr("Your passwords do not match");
-    }
-  };
-
   return (
     <div className="relative flex flex-col justify-center overflow-hidden p-4">
       <div className="w-full p-6 m-auto bg-white rounded-md sm:max-w-lg flex flex-col space-y-5">
-        <form className="space-y-6" onSubmit={(e) => onSubmit(e)}>
+        <form className="space-y-6" onSubmit={}>
           <div className="flex p-0">
             <a
               href
