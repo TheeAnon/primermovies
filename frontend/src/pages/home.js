@@ -9,28 +9,27 @@ import PortraitPoster from "../components/portrait_poster";
 import LandscapePoster from "../components/landscape_poster";
 import VerticalSec from "../components/verticalsec";
 
-
 const Home = () => {
   return (
     <div className="flex bg-black flex-col">
       <div>
-      <Header />
-      <div className="flex">
-        <div className="flex flex-col w-full md:px-5">
-            <div className="flex flex-row">
-            <div className="hidden md:block ml-4 h-full font-medium">
-              <Menu />
-            </div>
-            <Hero />
+        <Header />
+        <div className="flex">
+          <div className="flex flex-col w-full md:px-5">
+            <div className="flex flex-row max-h-screen">
+              <div className="hidden md:block ml-4 h-full font-medium">
+                <Menu />
+              </div>
+              <Hero />
             </div>
             <VerticalSec title="Latest Releases" />
             <VerticalSec title="Latest Releases" />
+          </div>
         </div>
-     </div>
+      </div>
+      <BottomNav />
+      <Footer />
     </div>
-    <BottomNav />
-    <Footer />
-   </div>
   );
 };
 

@@ -2,26 +2,18 @@ import React, { useState } from "react";
 import googleLogo from "../images/google.png";
 import fbLogo from "../images/fb.png";
 import { useNavigate } from "react-router-dom";
+import { login } from "../auth/auth";
 
-<<<<<<< HEAD
 const Login = () => {
   const navigate = useNavigate();
-=======
-
-const Login = () => {
->>>>>>> origin/main
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    remember: "",
   });
-<<<<<<< HEAD
   const [loading, setLoading] = useState(false);
-=======
->>>>>>> origin/main
 
-  const { email, password, remember } = formData;
+  const { email, password } = formData;
 
   const onChange = (e) => {
     if (e.target.type === "checkbox") {
@@ -31,51 +23,48 @@ const Login = () => {
     }
   };
 
-  const login = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const response = await fetch("http://localhost:1337/api/login", {
-<<<<<<< HEAD
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-=======
-       method: "POST",
-       headers: {
-          "Content-Type": "application/json",
-       },
-       body: JSON.stringify(formData),
->>>>>>> origin/main
-    });
-
-    const data = await response.json();
-
-<<<<<<< HEAD
-    if (data.status.code == 200) {
-      navigate("/", { replace: true });
-=======
-    if(data.status.code == 200){
->>>>>>> origin/main
-    } else {
-      setError(data.message);
+    try {
+      const { success, error } = await login(formData);
+      if (success) {
+        navigate("/", { replace: true });
+      } else {
+        setError(error);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setError("An error occurred. Please try again.");
     }
+
+    setLoading(false);
   };
 
-<<<<<<< HEAD
-=======
-  const navigate = useNavigate();
-
->>>>>>> origin/main
   return (
-    <div className="p-4 dark:bg-black w-full pt-20 h-full flex">
+    <div className="p-4 dark:bg-black w-full h-full flex">
       <div className="w-full sm:m-auto sm:max-w-lg h-full sm:h-auto">
-        <form className="space-y-6 mb-4" onSubmit={(e) => login(e)}>
-<<<<<<< HEAD
-          <h1 className="normal-case text-4xl font-bold dark:text-white">
-            Login
-          </h1>
+        <h1 className="normal-case text-4xl font-bold dark:text-white">
+          Login
+        </h1>
+
+        <div className="flex mt-6 w-full">
+          <div className="w-full m-auto space-y-2 flex flex-col">
+            <button className="btn btn-outline rounded">
+              <img src={googleLogo} alt="google" width={20} height={20} />{" "}
+              Continue with google
+            </button>
+            <button className="btn btn-outline rounded">
+              <img src={fbLogo} alt="google" width={25} height={25} /> Continue
+              with facebook
+            </button>
+          </div>
+        </div>
+
+        <div className="divider my-6">or continue with email and password</div>
+
+        <form className="space-y-6 mb-4" onSubmit={(e) => handleSubmit(e)}>
           <div>
             <label
               for="email"
@@ -83,11 +72,6 @@ const Login = () => {
             >
               Email
             </label>
-=======
-          <h1 className="normal-case text-4xl font-bold dark:text-white">Login</h1>
-          <div>
-            <label for="email"className="block mb-2 text-sm font-medium dark:text-white">Email</label>
->>>>>>> origin/main
             <input
               required
               type="email"
@@ -101,16 +85,12 @@ const Login = () => {
             />
           </div>
           <div>
-<<<<<<< HEAD
             <label
               for="password"
               className="text-sm font-medium dark:text-white"
             >
               Password
             </label>
-=======
-            <label for="password" className="text-sm font-medium dark:text-white">Password</label>
->>>>>>> origin/main
             <input
               required
               type="password"
@@ -128,29 +108,12 @@ const Login = () => {
           )}
           <div className="flex items-start">
             <div className="flex items-start">
-              <div className="flex items-center h-5">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  checked={remember}
-<<<<<<< HEAD
-                  onChange={(e) => onChange(e)}
-                  className="w-4 h-4 border border-white focus:ring-3 rounded"
-                />
-              </div>
-              <label
-                for="remember"
-                className="ml-2 text-sm font-medium text-white"
+              <a
+                href="/signup"
+                className="text-sm text-blue-700 hover:underline"
               >
-=======
-	          onChange={(e) => onChange(e)}
-                  className="w-4 h-4 border border-white focus:ring-3 rounded"
-                />
-              </div>
-              <label for="remember" className="ml-2 text-sm font-medium text-white">
->>>>>>> origin/main
-                Remember me
-              </label>
+                Don't have an account? Signup
+              </a>
             </div>
             <a
               href="/reset-password"
@@ -159,35 +122,13 @@ const Login = () => {
               Forgot Password?
             </a>
           </div>
-<<<<<<< HEAD
           <button
             type="submit"
-            className="btn btn w-full rounded-full bg-white text-black"
+            className="btn w-full rounded-full dark:bg-white dark:text-black"
           >
             Login
           </button>
         </form>
-        <a href="/signup" className="text-sm text-blue-700 hover:underline">
-          Don't have an account? Signup
-        </a>
-=======
-          <button type="submit" className="btn btn w-full rounded-full bg-white text-black">
-            Login
-          </button>
-        </form>
-        <a href="/signup" className="text-sm text-blue-700 hover:underline">Don't have an account? Signup</a>
->>>>>>> origin/main
-        <div className="divider mt-6 text-[#F5F5DC]">or continue with</div>
-        <div className="flex mt-6 w-full">
-          <div className="m-auto space-x-2 flex">
-            <button className="btn btn-square hover:bg-white btn-outline p-1 rounded border-[#F5F5DC]">
-              <img src={googleLogo} alt="google" width={20} height={20} />
-            </button>
-            <button className="btn btn-square btn-outline hover:bg-white p-1 rounded border-[#F5F5DC]">
-              <img src={fbLogo} alt="google" width={25} height={25} />
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
