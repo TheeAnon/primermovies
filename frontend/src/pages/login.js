@@ -11,6 +11,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+
   const [loading, setLoading] = useState(false);
 
   const { email, password } = formData;
@@ -28,8 +29,9 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const { success, error } = await login(formData);
+      const { success, error, data } = await login(formData);
       if (success) {
+        localStorage.setItem('token', data.user)
         navigate("/", { replace: true });
       } else {
         setError(error);
@@ -43,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <div className="p-4 dark:bg-black w-full h-full flex">
+    <div className="flex min-h-screen p-4 dark:bg-black w-full overflow-y-hidden">
       <div className="w-full sm:m-auto sm:max-w-lg h-full sm:h-auto">
         <h1 className="normal-case text-4xl font-bold dark:text-white">
           Login
@@ -68,7 +70,7 @@ const Login = () => {
           <div>
             <label
               for="email"
-              className="block mb-2 text-sm font-medium dark:text-white"
+              className="block mb-2 text-sm font-medium dark:text-gray-400"
             >
               Email
             </label>
@@ -80,14 +82,14 @@ const Login = () => {
               autoComplete="off"
               onChange={(e) => onChange(e)}
               id="email"
-              className="border dark:border-white dark:text-white text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-black placeholder-gray-400 rounded"
+              className="border dark:border-gray-400 dark:text-white text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-black placeholder-gray-400 rounded"
               placeholder="example@primermovies.com"
             />
           </div>
           <div>
             <label
               for="password"
-              className="text-sm font-medium dark:text-white"
+              className="text-sm font-medium dark:text-gray-400"
             >
               Password
             </label>
@@ -100,35 +102,34 @@ const Login = () => {
               minLength={6}
               id="password"
               placeholder="••••••••"
-              className="border dark:border-white mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-black placeholder-gray-400 dark:text-white rounded"
+              className="border dark:border-gray-400 mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-black placeholder-gray-400 dark:text-white rounded"
             />
           </div>
           {error && (
-            <label className="label-text-alt text-red-500">{error}</label>
+            <label className="label-text-alt text-red-800">{error}</label>
           )}
-          <div className="flex items-start">
-            <div className="flex items-start">
-              <a
-                href="/signup"
-                className="text-sm text-blue-700 hover:underline"
-              >
-                Don't have an account? Signup
-              </a>
-            </div>
+          <div className="flex">
             <a
               href="/reset-password"
-              className="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
+              className="text-sm text-blue-700 hover:underline dark:text-blue-700"
             >
               Forgot Password?
             </a>
           </div>
           <button
             type="submit"
-            className="btn w-full rounded-full dark:bg-white dark:text-black"
+            className="btn w-full rounded-full dark:text-black"
           >
             Login
           </button>
         </form>
+
+        <div className="flex justify-center">
+           <a href="/signup" className="text-sm text-blue-700 hover:underline">
+              <span className="text-gray-400">Don't have an account?</span> Signup
+           </a>
+        </div>
+
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export const login = async (formData) => {
   const data = await response.json();
 
   if (response.ok) {
-    return { success: true };
+    return { success: true, data };
   } else {
     return { success: false, error: data.message };
   }
