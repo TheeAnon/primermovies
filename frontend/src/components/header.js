@@ -11,8 +11,8 @@ const Header = ({user}) =>{
             </a>
 
         <div className="navbar-end space-x-2">
+          <button className="btn p-2 bg-black border-none w-12 text-gray-200 hover:text-[#A47C7A]"><FaSearch size={20} /></button>
           {!user&&<a href="login" className="btn btn-outline md:btn-md lg:btn-lg rounded-full btn-sm normal-case border-white text-white">Log in</a>}
-          <button className="btn rounded-full p-2 bg-black w-12"><FaSearch size={20} /></button>
         </div>
     </div>
   );

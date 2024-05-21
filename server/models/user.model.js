@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema(
     required: [true, "Please provide a password!"],
   },
   },
-  { collection: 'users', },
+  { collection: 'users' },
 )
 
 module.exports = mongoose.model.Users || mongoose.model("users", UserSchema);
