@@ -1,7 +1,7 @@
 const SearchBar = () => {
   return (
-    <form className="flex-grow p-0">
-      <div className="relative w-full">
+    <form className="flex-grow p-2">
+      <div className="relative w-full rounded border">
         <button className="btn btn-ghost btn-circle absolute top-0 left-0">
           <svg
             className="w-4 h-4"

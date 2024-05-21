@@ -1,7 +1,8 @@
 import React from "react";
 import avatar from "../images/avatar.png";
+import {FaSearch} from 'react-icons/fa';
 
-const Header = () =>{
+const Header = ({user}) =>{
 
   return (
       <div className="navbar">
@@ -10,7 +11,8 @@ const Header = () =>{
             </a>
 
         <div className="navbar-end space-x-2">
-          <a href="login" className="btn btn-outline md:btn-md lg:btn-lg rounded-full btn-sm normal-case border-white text-white">Log in</a>
+          {!user&&<a href="login" className="btn btn-outline md:btn-md lg:btn-lg rounded-full btn-sm normal-case border-white text-white">Log in</a>}
+          <button className="btn rounded-full p-2 bg-black w-12"><FaSearch size={20} /></button>
         </div>
     </div>
   );

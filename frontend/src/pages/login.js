@@ -12,32 +12,27 @@ const Login = () => {
     password: "",
   });
 
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { email, password } = formData;
-
-  const onChange = (e) => {
-    if (e.target.type === "checkbox") {
-      setFormData({ ...formData, [e.target.name]: e.target.checked });
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
-  };
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     setLoading(true);
 
     try {
-      const { success, error, data } = await login(formData);
+      const { success, error } = await login(formData);
       if (success) {
-        localStorage.setItem('token', data.user)
+        setSuccess("Login success");
         navigate("/", { replace: true });
       } else {
         setError(error);
       }
     } catch (error) {
-      console.error("An error occurred:", error);
       setError("An error occurred. Please try again.");
     }
 
@@ -50,7 +45,9 @@ const Login = () => {
         <h1 className="normal-case text-4xl font-bold dark:text-white">
           Login
         </h1>
-
+        { success && (<div role="alert" className="alert alert-success">
+            <span>{success}</span>
+          </div>)}
         <div className="flex mt-6 w-full">
           <div className="w-full m-auto space-y-2 flex flex-col">
             <button className="btn btn-outline rounded">
@@ -105,9 +102,7 @@ const Login = () => {
               className="border dark:border-gray-400 mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-black placeholder-gray-400 dark:text-white rounded"
             />
           </div>
-          {error && (
-            <label className="label-text-alt text-red-800">{error}</label>
-          )}
+          <label className="label-text-alt text-red-800">{error&&error}</label>
           <div className="flex">
             <a
               href="/reset-password"
@@ -116,11 +111,8 @@ const Login = () => {
               Forgot Password?
             </a>
           </div>
-          <button
-            type="submit"
-            className="btn w-full rounded-full dark:text-black"
-          >
-            Login
+          <button type="submit" className="btn w-full rounded-full" disabled={loading}>
+            {loading?<span className="loading loading-infinity loading-lg"></span>:"Login"}
           </button>
         </form>
 

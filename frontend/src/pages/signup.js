@@ -23,23 +23,26 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
       const { success, error } = await signup(formData);
       if (success) {
-        setSuccess("Account created successfully.");
+        setSuccess("Account created successfully. Logging you in...");
         const { success, error } = await login(formData);
         if (success) {
+          setSuccess("Login success.");
           navigate("/", { replace: true });
         } else {
+          setSuccess("");
           navigate("/login", { replace: true });
         }
       } else {
         setError(error);
       }
     } catch (error) {
-      console.error("An error occurred:", error);
       setError("An error occurred. Please try again.");
     }
 
@@ -47,12 +50,15 @@ const Signup = () => {
   };
 
   return (
-    <div className="p-4 bg-black w-full h-full flex">
+    <div className="p-4 bg-black w-full h-full flex" style={{height: '100vh'}}>
       <div className="w-full sm:m-auto sm:max-w-lg h-full sm:h-auto">
         <form className="space-y-6 mb-4" onSubmit={(e) => handleSubmit(e)}>
           <h1 className="normal-case text-4xl font-bold text-white">
             Create account
           </h1>
+          { success && (<div role="alert" className="alert alert-success">
+             <span>success}</span>
+          </div>)}
           <div>
             <label
               for="firstName"
@@ -121,29 +127,16 @@ const Signup = () => {
               className="border border-gray-800 mt-2 text-sm focus:ring-blue-500 focus:border-blue-500 w-full rounded p-2.5 bg-black placeholder-gray-400 text-white"
             />
           </div>
-          {error && (
-            <label className="label-text-alt text-red-500">{error}</label>
-          )}
+          <label className="label-text-alt text-red-500">{error&&error}</label>
           <div className="flex items-start">
             <a href="/login" className="text-sm text-blue-700 hover:underline">
               Already have an account? Login
             </a>
           </div>
-          <button type="submit" className="btn w-full rounded-full">
-            Sign up
+          <button type="submit" className="btn w-full rounded-full" disabled={loading}>
+            {loading?<span className="loading loading-infinity loading-lg"></span>:"Sign up"}
           </button>
         </form>
-        <div className="divider mt-6 text-[#F5F5DC]">or continue with</div>
-        <div className="flex mt-6 w-full">
-          <div className="m-auto space-x-2 flex">
-            <button className="btn btn-square hover:bg-white btn-outline border-[#F5F5DC] p-1 rounded-none">
-              <img src={googleLogo} alt="google" width={20} height={20} />
-            </button>
-            <button className="btn btn-square btn-outline hover:bg-white border-[#F5F5DC] p-1 rounded-none">
-              <img src={fbLogo} alt="google" width={25} height={25} />
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
