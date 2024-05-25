@@ -1,36 +1,5 @@
 const mongoose = require('mongoose');
 
-const EpisodeSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: [true, "Episode title must be included"]
-    },
-    description: {
-        type: String,
-        required: [true, "Episode description must be included"]
-    },
-    duration: {
-        type: Number,
-        required: [true, "Episode duration must be included"]
-    },
-    releaseDate: {
-        type: Date,
-    },
-    poster: {
-        type: String,
-    },
-}, { _id: false });
-
-const SeasonSchema = new mongoose.Schema({
-    number: {
-        type: Number,
-        required: [true, "Number of seasons must be included"]
-    },
-    poster: {
-        type: String,
-    },
-    episodes: [EpisodeSchema],
-}, { _id: false });
 
 const SeriesSchema = new mongoose.Schema({
     title: {
@@ -52,7 +21,7 @@ const SeriesSchema = new mongoose.Schema({
     releaseDate: {
         type: Date,
     },
-    seasons: [SeasonSchema], // Array of seasons
+    seasons: [String],
     cast: [{
         name: String,
         role: String
