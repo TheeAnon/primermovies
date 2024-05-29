@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input } from "../components/input_component";
-import { AddSeason } from "../components/add_season";
+import { Input } from "../../components/input_component";
+import { AddSeason } from "./components/add_season";
+import { Header } from "./components/header";
 
 const CreateSeries = () => {
   const navigate = useNavigate();
@@ -24,13 +25,13 @@ const CreateSeries = () => {
   });
 
   const [seasonData, setSeasonData] = useState({
-    number: 1,
-    poster: "",
-    episodes: [],
+    seasonNumber: 1,
+    seasonPoster: "",
+    seasonEpisodes: [],
   });
 
   const { title, description, genre, poster, releaseDate, cast, rating, seasons } = formData;
-  const { number, seasonPoster, episodes } = seasonData;
+  const { seasonNumber, seasonPoster, seasonEpisodes } = seasonData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -70,34 +71,26 @@ const CreateSeries = () => {
     setLoading(true);
 
     try{
-      setSuccess(formData);
+      setSuccess("Series created successfully");
     } catch (error) {
-      setError("An error occurred. Please try again.")
+      setError("An error occurred. Please try again.");
     }
 
     setLoading(false);
   };
 
   return (
-    <div className="flex min-h-screen p-4 dark:bg-black w-full overflow-y-hidden dark:bg-[#0F1110]">
-      <div className="w-full sm:m-auto sm:max-w-lg h-full sm:h-auto">
-        <h1 className="normal-case text-xl font-bold dark:text-white">
-          Create Series
-        </h1>
-
-        <ul className="steps">
-          <li className="step step-primary z-1" onClick={()=>setStep(1)}>Series</li>
-          <li className={`step ${step === 2 ? "step-primary" : ""}`}>Seasons</li>
-        </ul>
-
-        { success && (<div role="alert" className="p-1 alert alert-success">
+    <div className="flex p-4 dark:bg-black w-full overflow-y-hidden dark:bg-[#0F1110]">
+      <div className="w-full md:m-auto md:max-w-lg flex flex-col flex-1">
+        <Header step={step} setStep={setStep} />
+        { success && (<div role="alert" className="p-1 alert alert-success rounded-none">
             <span>{success}</span>
           </div>)}
-        { error && (<div role="alert" className="p-1 alert alert-error">
+        { error && (<div role="alert" className="p-1 alert alert-error rounded-none text-sm">
             <span>{error}</span>
           </div>)}
 
-        <form className="space-y-6 mb-4 mt-4" onSubmit={(e) => handleSubmit(e)}>
+        <form className="space-y-6 mb-4 mt-4 flex flex-col flex-1" onSubmit={(e) => handleSubmit(e)}>
 
           {step === 1 && (
             <>
@@ -119,7 +112,6 @@ const CreateSeries = () => {
             ></textarea>
           </div>
           <Input id="poster" label="Poster url" placeholder="https://blablabla" value={poster} onChange={onChange} />
-
           <div>
             <label className="block mb-0 text-sm font-medium dark:text-gray-400">Choose genre(s)</label>
             <div className="flex gap-2 mt-2 overflow-auto">
@@ -140,15 +132,15 @@ const CreateSeries = () => {
             <Input id="rating" label="Rating" type="number" value={rating} onChange={onChange} />
           </div>
 
-          <button type="button" onClick={validateSeries} className="btn w-full rounded-full" disabled={loading}>
+          <button type="button" onClick={validateSeries} className="btn w-full rounded" disabled={loading}>
              {loading?<span className="loading loading-infinity loading-lg"></span>:"Next"}
           </button></>)}
 
           {step === 2 && (
             <>
-          <AddSeason number={number} seasonPoster={seasonPoster} episodes={episodes} seasonPoster={seasonPoster} onSeasonChange={onSeasonChange} addSeason={postSeason} seasons={seasons}/>
+          <AddSeason seasonNumber={seasonNumber} seasonPoster={seasonPoster} seasonEpisodes={seasonEpisodes} onSeasonChange={onSeasonChange} addSeason={postSeason} seasons={seasons} />
 
-          <button type="submit" className="btn w-full rounded-full" disabled={loading}>
+          <button type="submit" className="btn w-full place-self-end rounded" disabled={loading}>
              {loading?<span className="loading loading-infinity loading-lg"></span>:"Post"}
           </button></>)}
         </form>

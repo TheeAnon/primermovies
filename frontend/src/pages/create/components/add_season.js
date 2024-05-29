@@ -1,10 +1,10 @@
-import { Input } from './input_component';
+import { Input } from '../../../components/input_component';
 import { useState } from 'react';
 
 export const AddSeason = ({
-  number,
+  seasonNumber,
   seasonPoster,
-  episodes,
+  seasonEpisodes,
   onSeasonChange,
   addSeason,
   seasons
@@ -12,12 +12,12 @@ export const AddSeason = ({
   const [episode, setEpisode] = useState(false);
   const [addedEpisodes, setAddedEpisodes] = useState([]);
   const [episodeData, setEpisodeData] = useState({
-    number: 1,
-    title: "",
-    description: "",
-    duration: "",
-    releaseDate: "",
-    poster: "",
+    episodeNumber: 1,
+    episodeTitle: "",
+    episodeDescription: "",
+    episodeDuration: "",
+    episodeReleaseDate: "",
+    episodePoster: "",
   });
   const { episodeNumber, episodeTitle, episodeDescription, episodeDuration, episodeReleaseDate, episodePoster } = episodeData;
 
@@ -29,12 +29,12 @@ export const AddSeason = ({
       if (episodeTitle && episodeDuration && episodeReleaseDate && episodePoster && episodeNumber) {
         setAddedEpisodes((prev) => [...prev, episodeData]);
         setEpisodeData({
-          number: episodeNumber + 1,
-          title: "",
-          description: "",
-          duration: "",
-          releaseDate: "",
-          poster: "",
+          episodeNumber: episodeData.episodeNumber + 1,
+          episodeTitle: "",
+          episodeDescription: "",
+          episodeDuration: "",
+          episodeReleaseDate: "",
+          episodePoster: "",
         });
         setEpisode(false);
       } else {
@@ -46,58 +46,60 @@ export const AddSeason = ({
   };
 
   const postSeason = () => {
-    if (number && seasonPoster && addedEpisodes.length > 0) {
-      const newSeason = { number, poster: seasonPoster, episodes: addedEpisodes };
-      addSeason(newSeason);
-      setAddedEpisodes([]);
-    } else {
-      alert("Please fill in all required fields.");
+   try{
+      alert(seasonNumber);
+      if (seasonNumber && seasonPoster && addedEpisodes.length > 0) {
+        const newSeason = { seasonNumber, seasonPoster, seasonEpisodes: addedEpisodes };
+        addSeason(newSeason);
+        setAddedEpisodes([]);
+      } else {
+        alert("Please fill in all required fields.");
+      }
+    }catch(e){
+      alert(e.message);
     }
   };
 
   return (
-    <div className="flex flex-col">
-      <h2 className="normal-case text-lg font-bold dark:text-white">
-        Add Season
-      </h2>
-
+    <div className="flex flex-col flex-1">
+      <h2 className="normal-case text-lg font-bold dark:text-white">Seasons</h2>
      {seasons.length > 0 && (
-        <div className="mt-4">
+        <div className="mt-2 grid grid-cols-3 gap-2">
             {seasons.map((season, index) => (
-              <div key={index} className="p-2">
-                <span className="block dark:text-white">Season {season.number}</span>
-                <span className="block text-sm dark:text-gray-400">{season.poster}</span>
-                <span className="block text-sm dark:text-gray-400">Episodes: {season.episodes.length}</span>
+ 	      <div key={index} className="bg-gray-200 rounded p-2 text-sm relative flex flex-col w-full">
+      		<div className="flex space-between">
+	          <span className="line-clamp-1 font-bold">{season.seasonNumber}({season.seasonEpisodes.length})</span>
+      		</div>
+      	 	<span className="text-xs line-clamp-1">{season.seasonPoster}</span>
               </div>
             ))}
         </div>
       )}
 
       <div className="flex gap-2">
-        <Input id="number" label="Number" type="number" value={number} onChange={onSeasonChange} />
-        <Input id="poster" label="Poster" value={seasonPoster} onChange={onSeasonChange} />
+        <Input id="seasonNumber" label="Number" type="number" value={seasonNumber} onChange={onSeasonChange} />
+        <Input id="seasonPoster" label="Poster" value={seasonPoster} onChange={onSeasonChange} />
       </div>
 
       <div className="gap-2 mt-2">
-        <h2 className="normal-case text-lg font-bold dark:text-white">
-          Episodes
-        </h2>
+        <div className="flex gap-2">
+          <h2 className="normal-case text-lg font-bold dark:text-white">Episodes</h2>
+          <button type="button" onClick={() => setEpisode(true)} className="rounded-full btn btn-sm">+</button>
+        </div>
 
         {addedEpisodes.length > 0 && (
-        <div className="mt-4 flex gap-2">
+        <div className="mt-2 grid grid-cols-5 gap-2">
             {addedEpisodes.map((episode, index) => (
-              <div key={index} className="border rounded p-2">
-                <span className="block dark:text-white">Episode {episode.episodeNumber}: {episode.episodeTitle}</span>
-                <span className="block text-sm dark:text-gray-400">Description: {episode.episodeDescription}</span>
-                <span className="block text-sm dark:text-gray-400">Duration: {episode.episodeDuration}</span>
-                <span className="block text-sm dark:text-gray-400">Release Date: {episode.episodeReleaseDate}</span>
-                <span className="block text-sm dark:text-gray-400">Poster: {episode.episodePoster}</span>
-              </div>
+	      <div key={index} className="bg-gray-200 rounded p-2 text-sm relative flex flex-col w-full">
+      		<div className="flex space-between">
+      		  <span className="line-clamp-1 font-bold">{episode.episodeNumber}: {episode.episodeTitle}</span>
+      		</div>
+      		<span className="text-xs line-clamp-2">{episode.episodeDescription}</span>
+    	      </div>
             ))}
         </div>
         )}
 
-        <button type="button" onClick={() => setEpisode(true)} className="mt-2 rounded-full btn">+ Add Episodes</button>
         <button type="button" onClick={postSeason} className="mt-2 rounded-full btn w-full">Add Season</button>
       </div>
 
@@ -117,7 +119,7 @@ export const AddSeason = ({
                 </label>
                 <textarea
                   required
-                  name="description"
+                  name="episodeDescription"
                   value={episodeDescription}
                   rows={4}
                   autoComplete="off"
@@ -126,12 +128,12 @@ export const AddSeason = ({
                   placeholder="A little desc about the series"
                 ></textarea>
               </div>
-              <div className="sm:flex gap-2">
-                <Input id="episodeReleaseDate" type="date" label="Release date" placeholder="DD/MM/YYYY" value={episodeReleaseDate} onChange={onEpisodeChange} />
-                <Input id="episodePoster" label="Episode poster" value={episodePoster} onChange={onEpisodeChange} />
-                <Input id="episodeDuration" label="Episode duration" value={episodeDuration} onChange={onEpisodeChange} />
+              <div className="flex gap-2">
+                <Input id="episodeReleaseDate" type="date" label="R. date" placeholder="DD/MM/YYYY" value={episodeReleaseDate} onChange={onEpisodeChange} />
+                <Input id="episodePoster" label="Poster" value={episodePoster} onChange={onEpisodeChange} />
+                <Input id="episodeDuration" label="Duration" value={episodeDuration} onChange={onEpisodeChange} />
               </div>
-              <button type="button" onClick={postEpisode} className="mt-2 rounded-full btn">Add</button>
+              <button type="button" onClick={postEpisode} className="mt-2 rounded btn">Add</button>
             </div>
           </div>
         </div>

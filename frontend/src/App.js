@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
-import CreateSeries from "./pages/create_series";
+import CreateSeries from "./pages/create/create_series";
 import axios from "axios";
 import { UserContextProvider } from "./context/userContext";
 
